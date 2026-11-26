@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--
+  Author: Christina Bays
+  GU username: cbays2
+  Course: BMIS 235 - HTML-3
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Christina Bays">
+<title>Home</title>
+
+<!-- this one line connects the page to the stylesheet -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== MENU ============================================================
+     The menu is four links. Each link wraps an image instead of words.
+     Build it once on this page, check that every link works,
+     then copy the whole <nav> block and paste it over the menu on the
+     other three pages, so every page has the exact same menu.
+     ===================================================================== -->
+<nav>
+    <a href="index.html"><img src="img/screenshot3.png" alt="Best Spots in Ireland"></a>
+    <a href="christina.html"><img src="img/screenshot2.png" alt="Aran Islands"></a>
+    <a href="christinab.html"><img src="img/screentshot1.png" alt="Cliffs of Moher"></a>
+    <a href="christinabays.html"><img src="img/screenshot4.png" alt="Guinness Storehouse"></a>
+</nav>
+
+<h1>Home</h1>
+<p>This Country is part of the EU and UK.</p>
+<p>Ireland is a beautiful country with many sights to see.</p>
+<p>Questions about Ireland? <a href="mailto:christinabays47@gmail.com">Email me</a>.</p>
+<!-- ===== SHOWCASE ======================================================
+     This box is empty on purpose. In Part 7 you paste an interactive
+     graphic BETWEEN the opening <div> and the closing </div> below.
+     ===================================================================== -->
+<!-- HTML: a green box with four bouncing place buttons and a fact card -->
+<div class="showcase-box" id="irelandBox">
+  <div class="showcase-hint">Click a place to learn a fun fact!</div>
+  <button class="showcase-spot" data-fact="Ireland is small enough to drive coast to coast, Dublin to Galway, in about 2.5 hours.">Best Spots</button>
+  <button class="showcase-spot" data-fact="Dún Aonghasa, a 3,000-year-old stone fort on Inis Mór, sits right on a cliff about 100 m above the Atlantic.">Aran Islands</button>
+  <button class="showcase-spot" data-fact="The Cliffs of Moher stretch about 14 km along the coast and reach 214 m (702 ft) at their highest point.">Cliffs of Moher</button>
+  <button class="showcase-spot" data-fact="In 1759, Arthur Guinness signed a 9,000-year lease on the St. James's Gate brewery.">Guinness</button>
+  <div class="showcase-card" id="irelandCard">
+    <div class="showcase-card-title" id="irelandTitle"></div>
+    <div class="showcase-card-text" id="irelandText"></div>
+    <button class="showcase-close" id="irelandClose">Keep exploring</button>
+  </div>
+</div>
+
+<!-- CSS: brand colors and font, button style, and the pop-up fact card -->
+<style>
+  .showcase .showcase-box {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 360px;
+    margin: 20px auto;
+    background: #169B62;
+    border-radius: 16px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+  .showcase .showcase-hint {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+    font-size: 15px;
+  }
+  .showcase .showcase-spot {
+    position: absolute;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #169B62;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  }
+  .showcase .showcase-spot:hover {
+    background: #FF883E;
+    color: #ffffff;
+  }
+  .showcase .showcase-card {
+    display: none;
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    bottom: 16px;
+    padding: 16px;
+    background: #ffffff;
+    border-top: 6px solid #FF883E;
+    border-radius: 12px;
+    text-align: center;
+    color: #1E3D2F;
+  }
+  .showcase .showcase-card.showcase-open {
+    display: block;
+  }
+  .showcase .showcase-card-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #169B62;
+    margin-bottom: 6px;
+  }
+  .showcase .showcase-card-text {
+    font-size: 15px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .showcase .showcase-close {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #FF883E;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+  }
+</style>
+
+<!-- JavaScript: makes the buttons bounce and shows a fact when one is clicked -->
+<script>
+  (function () {
+    var box = document.getElementById("irelandBox");
+    var card = document.getElementById("irelandCard");
+    var title = document.getElementById("irelandTitle");
+    var text = document.getElementById("irelandText");
+    var closeBtn = document.getElementById("irelandClose");
+    var spots = box.querySelectorAll(".showcase-spot");
+    var paused = false;
+    var movers = [];
+
+    // give each button a random start spot and speed
+    spots.forEach(function (spot) {
+      var mover = {
+        el: spot,
+        x: Math.random() * (box.clientWidth - 140),
+        y: 40 + Math.random() * (box.clientHeight - 100),
+        dx: (Math.random() < 0.5 ? -1 : 1) * (0.6 + Math.random()),
+        dy: (Math.random() < 0.5 ? -1 : 1) * (0.6 + Math.random())
+      };
+      movers.push(mover);
+
+      // clicking a button pauses the bouncing and shows its fact
+      spot.addEventListener("click", function () {
+        title.textContent = spot.textContent;
+        text.textContent = spot.getAttribute("data-fact");
+        card.classList.add("showcase-open");
+        paused = true;
+      });
+    });
+
+    // the close button hides the fact and starts the bouncing again
+    closeBtn.addEventListener("click", function () {
+      card.classList.remove("showcase-open");
+      paused = false;
+    });
+
+    // move every button a little each frame and bounce off the edges
+    function move() {
+      if (!paused) {
+        movers.forEach(function (m) {
+          var maxX = box.clientWidth - m.el.offsetWidth;
+          var maxY = box.clientHeight - m.el.offsetHeight;
+          m.x += m.dx;
+          m.y += m.dy;
+          if (m.x <= 0 || m.x >= maxX) { m.dx = -m.dx; m.x = Math.max(0, Math.min(m.x, maxX)); }
+          if (m.y <= 35 || m.y >= maxY) { m.dy = -m.dy; m.y = Math.max(35, Math.min(m.y, maxY)); }
+          m.el.style.left = m.x + "px";
+          m.el.style.top = m.y + "px";
+        });
+      }
+      requestAnimationFrame(move);
+    }
+    move();
+  })();
+</script>
+
+<!-- Footer: fill in your name -->
+<footer>Built by Christina Bays &middot; BMIS 235</footer>
+
+</body>
+</html>
