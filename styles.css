@@ -38,6 +38,19 @@ nav a {
     text-decoration: none;
 }
 
+/* the "Learn Links" menu item is text, styled to sit beside the image links */
+nav a.nav-text {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 4px;
+    padding: 13px 18px;
+    background-color: #ffffff;
+    color: #169B62;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 8px;
+}
+
 h1 {
     color: #1696B62;
     text-align: center;

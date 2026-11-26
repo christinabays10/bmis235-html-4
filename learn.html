@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<!--
+  Author: Christina Bays
+  GU username: cbays2
+  Course: BMIS 235 - HTML-4
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Christina Bays">
+<title>Learn Links</title>
+
+<!-- this one line connects the page to the stylesheet -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== MENU ============================================================
+     Same menu as every other page, plus the Learn Links text link.
+     ===================================================================== -->
+<nav>
+    <a href="index.html"><img src="img/screenshot3.png" alt="Best Spots in Ireland"></a>
+    <a href="christina.html"><img src="img/screenshot2.png" alt="Aran Islands"></a>
+    <a href="christinab.html"><img src="img/screentshot1.png" alt="Cliffs of Moher"></a>
+    <a href="christinabays.html"><img src="img/screenshot4.png" alt="Guinness Storehouse"></a>
+    <a href="learn.html" class="nav-text">Learn Links</a>
+</nav>
+
+<h1>Learn Links</h1>
+<p>Every <code>&lt;a href="..."&gt;</code>, <code>&lt;img src="..."&gt;</code> and <code>&lt;link href="..."&gt;</code> is a set of directions. The browser starts in the folder of the page it is showing and follows the path to the file.</p>
+<p>The file tree below is this website. Each question tells you which page you are editing. Pick or type the path, then read why it works or doesn't.</p>
+
+<!-- ===== QUICK RULES ===================================================== -->
+<div class="learn-rules">
+  <div class="learn-rule"><code>christina.html</code><span>Same folder: just the file name.</span></div>
+  <div class="learn-rule"><code>img/home.png</code><span>Go into the <b>img</b> folder, then find the file.</span></div>
+  <div class="learn-rule"><code>../index.html</code><span>Go <b>up</b> one folder, then find the file.</span></div>
+  <div class="learn-rule"><code>https://...</code><span>Another website: needs the full address.</span></div>
+</div>
+
+<!-- ===== THE GAME ======================================================== -->
+<div class="learn-game">
+  <div class="learn-top">
+    <span id="learnProgress">Question 1 of 8</span>
+    <span id="learnScore">Score: 0</span>
+  </div>
+  <div class="learn-bar"><div class="learn-bar-fill" id="learnBar"></div></div>
+
+  <div class="learn-layout" id="learnPlay">
+    <!-- the file tree -->
+    <div class="learn-tree-box">
+      <div class="learn-tree-title">Your site's files</div>
+      <ul class="learn-tree" id="learnTree"></ul>
+      <div class="learn-legend">
+        <span><i class="learn-dot learn-dot-here"></i>You are editing</span>
+        <span><i class="learn-dot learn-dot-target"></i>Link to this</span>
+      </div>
+    </div>
+
+    <!-- the question -->
+    <div class="learn-q-box">
+      <div class="learn-q-tag" id="learnTag"></div>
+      <div class="learn-q-text" id="learnPrompt"></div>
+      <pre class="learn-code" id="learnCode"></pre>
+
+      <div class="learn-options" id="learnOptions"></div>
+
+      <form class="learn-type" id="learnTypeForm" autocomplete="off">
+        <label for="learnInput">Type the href:</label>
+        <div class="learn-type-row">
+          <input type="text" id="learnInput" spellcheck="false" autocapitalize="off">
+          <button type="submit" class="learn-btn">Check</button>
+        </div>
+      </form>
+
+      <div class="learn-feedback" id="learnFeedback" aria-live="polite"></div>
+      <button type="button" class="learn-btn learn-next" id="learnNext">Next question</button>
+    </div>
+  </div>
+
+  <!-- shown at the end -->
+  <div class="learn-done" id="learnDone">
+    <div class="learn-done-score" id="learnDoneScore"></div>
+    <p id="learnDoneText"></p>
+    <button type="button" class="learn-btn" id="learnRestart">Play again</button>
+  </div>
+</div>
+
+<!-- CSS: styles for this page only, in the same brand colors -->
+<style>
+  code {
+    font-family: Consolas, "Courier New", monospace;
+    background: #E6F4EC;
+    color: #0E5E3B;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .learn-rules {
+    max-width: 900px;
+    margin: 24px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+  }
+  .learn-rule {
+    background: #ffffff;
+    border-left: 5px solid #169B62;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 15px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  }
+  .learn-rule code { display: inline-block; margin-bottom: 4px; font-weight: bold; }
+  .learn-rule span { display: block; color: #1E3D2F; }
+
+  .learn-game {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    color: #1E3D2F;
+  }
+  .learn-top {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #169B62;
+    margin-bottom: 8px;
+  }
+  .learn-bar { height: 8px; background: #E6F4EC; border-radius: 999px; overflow: hidden; margin-bottom: 16px; }
+  .learn-bar-fill { height: 100%; width: 0; background: #FF883E; transition: width 0.3s; }
+
+  .learn-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 680px) {
+    .learn-layout { grid-template-columns: 1fr; }
+  }
+
+  /* file tree */
+  .learn-tree-box { background: #F7F3E8; border-radius: 12px; padding: 12px; }
+  .learn-tree-title { font-weight: bold; margin-bottom: 8px; }
+  .learn-tree, .learn-tree ul { list-style: none; margin: 0; padding: 0; }
+  .learn-tree ul { padding-left: 20px; border-left: 2px dashed #B9D8C6; margin-left: 8px; }
+  .learn-tree li { margin: 3px 0; }
+  .learn-file {
+    display: inline-block;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    overflow-wrap: anywhere;
+  }
+  .learn-file small { font-family: Arial, sans-serif; color: #6B7F73; margin-left: 4px; white-space: nowrap; }
+  .learn-folder { font-weight: bold; }
+  .learn-here { border-color: #169B62; background: #E6F4EC; }
+  .learn-target { border-color: #FF883E; background: #FFF0E6; }
+  .learn-legend { margin-top: 10px; font-size: 13px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .learn-dot { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+  .learn-dot-here { background: #E6F4EC; border: 2px solid #169B62; }
+  .learn-dot-target { background: #FFF0E6; border: 2px solid #FF883E; }
+
+  /* question */
+  .learn-q-tag {
+    display: inline-block;
+    background: #169B62;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .learn-q-text { font-size: 18px; line-height: 1.45; margin-bottom: 10px; }
+  .learn-code {
+    background: #1E3D2F;
+    color: #F7F3E8;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 0 0 12px 0;
+  }
+  .learn-code b { color: #FF883E; }
+  .learn-options { display: grid; gap: 8px; }
+  .learn-option {
+    text-align: left;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 16px;
+    padding: 10px 12px;
+    border: 2px solid #B9D8C6;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1E3D2F;
+    cursor: pointer;
+    word-break: break-all;
+  }
+  .learn-option:hover:not(:disabled) { border-color: #169B62; background: #E6F4EC; }
+  .learn-option:disabled { cursor: default; }
+  .learn-option.learn-right { border-color: #169B62; background: #E6F4EC; font-weight: bold; }
+  .learn-option.learn-wrong { border-color: #C8102E; background: #FBE7EA; }
+
+  .learn-type label { display: block; font-weight: bold; margin-bottom: 6px; }
+  .learn-type-row { display: flex; gap: 8px; }
+  .learn-type input {
+    flex: 1;
+    min-width: 0;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 16px;
+    padding: 10px;
+    border: 2px solid #B9D8C6;
+    border-radius: 8px;
+  }
+  .learn-type input:focus { outline: none; border-color: #169B62; }
+
+  .learn-btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #FF883E;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .learn-btn:hover { background: #E8701F; }
+  .learn-next { display: none; margin-top: 12px; }
+
+  .learn-feedback { display: none; margin-top: 12px; padding: 12px; border-radius: 8px; line-height: 1.45; font-size: 16px; }
+  .learn-feedback.learn-show { display: block; }
+  .learn-feedback.learn-good { background: #E6F4EC; border-left: 5px solid #169B62; }
+  .learn-feedback.learn-bad { background: #FBE7EA; border-left: 5px solid #C8102E; }
+  .learn-feedback strong { display: block; margin-bottom: 4px; }
+  .learn-route { margin-top: 8px; font-size: 14px; color: #1E3D2F; }
+  .learn-route ol { margin: 4px 0 0 0; padding-left: 20px; }
+
+  .learn-done { display: none; text-align: center; padding: 20px 0; }
+  .learn-done-score { font-size: 44px; font-weight: bold; color: #169B62; }
+</style>
+
+<!-- JavaScript: the questions, the file tree and the instant feedback -->
+<script>
+  (function () {
+    // ----- the file tree of this site -----
+    var siteTree = [
+      { name: "bmis235-html-4/", folder: true, children: [
+        { name: "index.html", note: "Home" },
+        { name: "christina.html", note: "Aran Islands" },
+        { name: "christinab.html", note: "Cliffs of Moher" },
+        { name: "christinabays.html", note: "Guinness" },
+        { name: "learn.html", note: "this page" },
+        { name: "styles.css" },
+        { name: "img/", folder: true, children: [
+          { name: "home.png" },
+          { name: "screenshot2.png" },
+          { name: "screenshot3.png" },
+          { name: "screenshot4.png" },
+          { name: "screentshot1.png" }
+        ]}
+      ]}
+    ];
+
+    // a "what if" version where the place pages are moved into a folder
+    var movedTree = [
+      { name: "bmis235-html-4/", folder: true, children: [
+        { name: "index.html", note: "Home" },
+        { name: "styles.css" },
+        { name: "img/", folder: true, children: [
+          { name: "screenshot3.png" }
+        ]},
+        { name: "places/", folder: true, children: [
+          { name: "christina.html", note: "Aran Islands" },
+          { name: "christinab.html", note: "Cliffs of Moher" },
+          { name: "christinabays.html", note: "Guinness" }
+        ]}
+      ]}
+    ];
+
+    // ----- the questions -----
+    // "here" and "target" are full paths in the tree, used for highlighting.
+    var questions = [
+      {
+        kind: "pick", tag: "Same folder",
+        here: "index.html", target: "christinab.html",
+        prompt: "You're editing <b>index.html</b>. Link to the Cliffs of Moher page.",
+        code: '<a href="____">Cliffs of Moher</a>',
+        options: [
+          { a: "img/christinab.html", why: "<code>img/</code> means \"go into the img folder first\". The Cliffs page isn't in img. It sits right next to index.html." },
+          { a: "christinab.html", ok: true, why: "index.html and christinab.html are in the same folder, so the file name alone is enough." },
+          { a: "christinab", why: "The <code>.html</code> is part of the file's name. Without it the browser looks for a file called just \"christinab\", which doesn't exist." },
+          { a: "/christinab.html", why: "A leading <code>/</code> means \"start at the very top of the website\". On GitHub Pages your site lives at <code>username.github.io/bmis235-html-4/</code>, so <code>/</code> jumps above your folder and the page isn't found. Leave the slash off." }
+        ],
+        route: ["Start in the folder that holds index.html: <code>bmis235-html-4/</code>", "Look for <code>christinab.html</code> right there. Found it."]
+      },
+      {
+        kind: "type", tag: "Same folder",
+        here: "christina.html", target: "index.html",
+        prompt: "You're editing <b>christina.html</b> (Aran Islands). Type the href that links back to the Home page.",
+        code: '<a href="____">Home</a>',
+        answer: "index.html",
+        check: function (v) {
+          if (v === "index.html") return { ok: true, why: "Both pages are in the same folder, so just the file name." };
+          if (v === "./index.html") return { ok: true, why: "<code>./</code> means \"this folder\", so this works. Most people leave it off and write <code>index.html</code>." };
+          if (v.toLowerCase() === "index.html") return { why: "Close, but capital letters matter. GitHub Pages treats <code>Index.html</code> and <code>index.html</code> as different files. Use exactly <code>index.html</code>." };
+          if (v === "index" ) return { why: "Add the file extension. The file's full name is <code>index.html</code>." };
+          if (v === "home.html" || v === "home") return { why: "\"Home\" is just the page's title. The file itself is named <code>index.html</code>. The href always uses the file name." };
+          if (v === "/index.html") return { why: "The leading <code>/</code> jumps to the top of the whole website (above your repo folder on GitHub Pages). Drop it: <code>index.html</code>." };
+          if (v === "../index.html") return { why: "<code>../</code> means \"go up one folder\". christina.html is already in the same folder as index.html, so going up overshoots. Use <code>index.html</code>." };
+          return { why: "Look at the tree: christina.html and index.html sit in the same folder, so the href is just the file name: <code>index.html</code>." };
+        },
+        route: ["Start in the folder that holds christina.html: <code>bmis235-html-4/</code>", "Look for <code>index.html</code> right there. Found it."]
+      },
+      {
+        kind: "pick", tag: "Into a folder",
+        here: "index.html", target: "img/screenshot4.png",
+        prompt: "You're editing <b>index.html</b>. Show the Guinness menu image.",
+        code: '<img src="____" alt="Guinness Storehouse">',
+        options: [
+          { a: "screenshot4.png", why: "Without a folder name the browser looks next to index.html. The image isn't there. It's inside the <code>img</code> folder." },
+          { a: "img\\screenshot4.png", why: "That's a backslash, which Windows uses for its folders. Web addresses always use a forward slash: <code>img/screenshot4.png</code>." },
+          { a: "img/screenshot4", why: "The extension is missing. The file is named <code>screenshot4.png</code>, so the path needs the <code>.png</code>." },
+          { a: "img/screenshot4.png", ok: true, why: "Go into the <code>img</code> folder, then find <code>screenshot4.png</code>. The <code>/</code> separates the folder from the file." }
+        ],
+        route: ["Start in <code>bmis235-html-4/</code>", "Go into the <code>img/</code> folder", "Look for <code>screenshot4.png</code>. Found it."]
+      },
+      {
+        kind: "type", tag: "Same folder",
+        here: "christinabays.html", target: "styles.css",
+        prompt: "You're editing <b>christinabays.html</b>. Type the href that connects the page to your stylesheet.",
+        code: '<link rel="stylesheet" href="____">',
+        answer: "styles.css",
+        check: function (v) {
+          if (v === "styles.css") return { ok: true, why: "A <code>&lt;link&gt;</code> finds files the same way an <code>&lt;a&gt;</code> does. styles.css is in the same folder, so the name is enough." };
+          if (v === "./styles.css") return { ok: true, why: "<code>./</code> means \"this folder\", so it works. <code>styles.css</code> on its own does the same thing." };
+          if (v === "style.css") return { why: "Check the tree: the file is <code>styles.css</code>, with an <b>s</b>. One letter off and the browser can't find it, so the page loses all its colors." };
+          if (v === "styles") return { why: "Add the extension: <code>styles.css</code>." };
+          if (v === "img/styles.css") return { why: "The stylesheet isn't inside img. It sits next to the HTML pages." };
+          if (v === "/styles.css") return { why: "The leading <code>/</code> jumps to the top of the whole website instead of your folder. Use <code>styles.css</code>." };
+          if (v.toLowerCase() === "styles.css") return { why: "Capital letters matter on the web server. Use exactly <code>styles.css</code>." };
+          return { why: "The stylesheet is in the same folder as christinabays.html, so the href is just its file name: <code>styles.css</code>." };
+        },
+        route: ["Start in <code>bmis235-html-4/</code>", "Look for <code>styles.css</code> right there. Found it."]
+      },
+      {
+        kind: "pick", tag: "Exact spelling",
+        here: "christinab.html", target: "img/screentshot1.png",
+        prompt: "You're editing <b>christinab.html</b>. Show the Cliffs of Moher menu image. Read the file name in the img folder very closely.",
+        code: '<img src="____" alt="Cliffs of Moher">',
+        options: [
+          { a: "img/screenshot1.png", why: "This looks right, but the real file is spelled <code>screen<b>t</b>shot1.png</code>. The browser needs an exact match, so you'd get a broken image." },
+          { a: "img/screenshot 1.png", why: "There's a space in this one, and the real file has no space (and an extra t). Avoid spaces in file names. They cause exactly this kind of mistake." },
+          { a: "img/screentshot1.png", ok: true, why: "It matches the real file letter for letter, typo included. The browser doesn't care whether a name is spelled \"right\". It only cares that it matches. Tip: copy file names instead of retyping them." },
+          { a: "img/cliffs.png", why: "There's no file called cliffs.png. The name doesn't have to describe the picture, but it does have to match a file that exists." }
+        ],
+        route: ["Start in <code>bmis235-html-4/</code>", "Go into <code>img/</code>", "Look for <code>screentshot1.png</code> (with the extra t). Found it."]
+      },
+      {
+        kind: "pick", tag: "Capital letters",
+        here: "index.html", target: "img/home.png",
+        prompt: "You're editing <b>index.html</b>. Show the image <b>home.png</b>. It works on your laptop with any of these, but only one works once it's live on GitHub Pages. Which one?",
+        code: '<img src="____" alt="Home">',
+        options: [
+          { a: "img/Home.png", why: "Windows and Mac usually ignore capital letters, so this works on your laptop. The GitHub Pages server doesn't: to it, <code>Home.png</code> and <code>home.png</code> are different files." },
+          { a: "IMG/home.png", why: "Folder names are case-sensitive too. The folder is <code>img</code>, all lowercase." },
+          { a: "img/home.png", ok: true, why: "It matches the folder and file exactly, lowercase included. Naming everything in lowercase saves you from this bug." },
+          { a: "img/HOME.PNG", why: "The extension counts too. <code>.PNG</code> and <code>.png</code> are different on a web server." }
+        ],
+        route: ["Start in <code>bmis235-html-4/</code>", "Go into <code>img/</code> (lowercase)", "Look for <code>home.png</code> (lowercase). Found it."]
+      },
+      {
+        kind: "type", tag: "Another website",
+        here: "christinab.html", target: null,
+        prompt: "You're editing <b>christinab.html</b>. Link to the official Cliffs of Moher website at <b>www.cliffsofmoher.ie</b>. Type the href.",
+        code: '<a href="____">official Cliffs of Moher site</a>',
+        answer: "https://www.cliffsofmoher.ie",
+        check: function (v) {
+          var low = v.toLowerCase();
+          if (/^https:\/\/(www\.)?cliffsofmoher\.ie\/?$/.test(low)) return { ok: true, why: "A different website isn't in your file tree, so you give the full address, starting with <code>https://</code>. This is called an <b>absolute</b> URL." };
+          if (/^http:\/\/(www\.)?cliffsofmoher\.ie\/?$/.test(low)) return { ok: true, why: "That works, but use <code>https://</code> (the secure version). Most sites redirect to it anyway." };
+          if (/^(www\.)?cliffsofmoher\.ie\/?$/.test(low)) return { why: "Without <code>https://</code> the browser thinks this is a file in <b>your</b> folder called \"www.cliffsofmoher.ie\", and you get a 404. Other websites need the full address: <code>https://www.cliffsofmoher.ie</code>." };
+          if (/^\/\/(www\.)?cliffsofmoher\.ie/.test(low)) return { why: "Almost. Include the <code>https:</code> at the front so it's the full address: <code>https://www.cliffsofmoher.ie</code>." };
+          return { why: "To reach another website, type its full address including <code>https://</code>: <code>https://www.cliffsofmoher.ie</code>." };
+        },
+        route: ["It starts with <code>https://</code>, so the browser leaves your site completely", "It goes to the server at <code>www.cliffsofmoher.ie</code> and asks for its home page"]
+      },
+      {
+        kind: "pick", tag: "Up a folder", tree: "moved",
+        here: "places/christina.html", target: "index.html",
+        prompt: "<b>What if</b> you moved your three place pages into a new folder called <b>places</b> (see the tree)? You're editing <b>places/christina.html</b>. Link back to Home.",
+        code: '<a href="____">Home</a>',
+        options: [
+          { a: "index.html", why: "The browser looks inside <code>places/</code>, where christina.html now lives. index.html isn't in there, so you get a 404." },
+          { a: "places/index.html", why: "You're already inside places/, so this looks for <code>places/places/index.html</code>, which doesn't exist." },
+          { a: "../index.html", ok: true, why: "<code>..</code> means \"go up one folder\". That takes you out of places/ to where index.html lives. This is also why a page in a subfolder needs <code>../styles.css</code> and <code>../img/...</code>." },
+          { a: "/index.html", why: "The leading <code>/</code> jumps to the top of the whole website, which is above your repo folder on GitHub Pages. Use <code>../</code> to go up just one level." }
+        ],
+        route: ["Start in the folder that holds christina.html: <code>places/</code>", "<code>..</code> goes up one level to <code>bmis235-html-4/</code>", "Look for <code>index.html</code> there. Found it."]
+      }
+    ];
+
+    // ----- grab the page elements -----
+    var $ = function (id) { return document.getElementById(id); };
+    var treeEl = $("learnTree"), tagEl = $("learnTag"), promptEl = $("learnPrompt"), codeEl = $("learnCode");
+    var optionsEl = $("learnOptions"), typeForm = $("learnTypeForm"), inputEl = $("learnInput");
+    var feedbackEl = $("learnFeedback"), nextBtn = $("learnNext");
+    var progressEl = $("learnProgress"), scoreEl = $("learnScore"), barEl = $("learnBar");
+    var playEl = $("learnPlay"), doneEl = $("learnDone");
+
+    var current = 0, score = 0, answered = false;
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    // draw the file tree and highlight "you are here" and the target
+    function drawTree(tree, here, target) {
+      function build(items, prefix) {
+        var html = "";
+        items.forEach(function (item) {
+          var path = prefix + item.name;
+          var cls = "learn-file" + (item.folder ? " learn-folder" : "");
+          if (path === here) cls += " learn-here";
+          if (path === target) cls += " learn-target";
+          html += "<li><span class=\"" + cls + "\">" + (item.folder ? "&#128193; " : "") + item.name +
+                  (item.note ? "<small>" + item.note + "</small>" : "") + "</span>";
+          if (item.children) {
+            // the top folder is the site root, so its children have no prefix
+            html += "<ul>" + build(item.children, prefix === null ? "" : path) + "</ul>";
+          }
+          html += "</li>";
+        });
+        return html;
+      }
+      // root folder: children use "" as their prefix
+      var root = tree[0];
+      treeEl.innerHTML = "<li><span class=\"learn-file learn-folder\">&#128193; " + root.name + "</span><ul>" +
+                         build(root.children, "") + "</ul></li>";
+    }
+
+    // show the code with the blank (or the right answer once answered)
+    function drawCode(q, filled) {
+      var parts = q.code.split("____");
+      codeEl.innerHTML = escapeHtml(parts[0]) + "<b>" + escapeHtml(filled || "____") + "</b>" + escapeHtml(parts[1]);
+    }
+
+    function showQuestion() {
+      var q = questions[current];
+      answered = false;
+      progressEl.textContent = "Question " + (current + 1) + " of " + questions.length;
+      scoreEl.textContent = "Score: " + score;
+      barEl.style.width = (current / questions.length * 100) + "%";
+      tagEl.textContent = q.tag;
+      promptEl.innerHTML = q.prompt;
+      drawTree(q.tree === "moved" ? movedTree : siteTree, q.here, q.target);
+      drawCode(q);
+      feedbackEl.className = "learn-feedback";
+      feedbackEl.innerHTML = "";
+      nextBtn.style.display = "none";
+      nextBtn.textContent = current === questions.length - 1 ? "See my score" : "Next question";
+
+      optionsEl.innerHTML = "";
+      if (q.kind === "pick") {
+        typeForm.style.display = "none";
+        optionsEl.style.display = "grid";
+        q.options.forEach(function (opt) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "learn-option";
+          b.textContent = opt.a;
+          b.addEventListener("click", function () { answerPick(b, opt); });
+          optionsEl.appendChild(b);
+        });
+      } else {
+        optionsEl.style.display = "none";
+        typeForm.style.display = "block";
+        inputEl.value = "";
+        inputEl.disabled = false;
+        inputEl.focus({ preventScroll: true });
+      }
+    }
+
+    function showFeedback(ok, why, q, rightAnswer) {
+      feedbackEl.className = "learn-feedback learn-show " + (ok ? "learn-good" : "learn-bad");
+      var head = ok ? "Correct!" : "Not quite. The answer is <code>" + escapeHtml(rightAnswer) + "</code>";
+      var route = "<div class=\"learn-route\">How the browser follows it:<ol><li>" + q.route.join("</li><li>") + "</li></ol></div>";
+      feedbackEl.innerHTML = "<strong>" + head + "</strong>" + why + route;
+      if (ok) score++;
+      scoreEl.textContent = "Score: " + score;
+      drawCode(q, rightAnswer);
+      answered = true;
+      nextBtn.style.display = "inline-block";
+      nextBtn.focus({ preventScroll: true });
+    }
+
+    function answerPick(button, opt) {
+      if (answered) return;
+      var q = questions[current];
+      var right = q.options.filter(function (o) { return o.ok; })[0];
+      Array.prototype.forEach.call(optionsEl.children, function (b, i) {
+        b.disabled = true;
+        if (q.options[i].ok) b.classList.add("learn-right");
+      });
+      if (!opt.ok) {
+        button.classList.add("learn-wrong");
+        // explain the wrong pick, then why the right one works
+        showFeedback(false, opt.why + "<br><br><b>Why <code>" + escapeHtml(right.a) + "</code> works:</b> " + right.why, q, right.a);
+      } else {
+        showFeedback(true, opt.why, q, right.a);
+      }
+    }
+
+    // clean up what was typed: spaces, quotes, or a pasted href="..."
+    function cleanTyped(v) {
+      v = v.trim();
+      v = v.replace(/^href\s*=\s*/i, "");
+      v = v.replace(/^["']|["']$/g, "");
+      return v.trim();
+    }
+
+    typeForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (answered) return;
+      var v = cleanTyped(inputEl.value);
+      if (!v) { inputEl.focus(); return; }
+      var q = questions[current];
+      var result = q.check(v);
+      inputEl.disabled = true;
+      showFeedback(!!result.ok, result.why, q, result.ok ? v : q.answer);
+    });
+
+    nextBtn.addEventListener("click", function () {
+      current++;
+      if (current < questions.length) {
+        showQuestion();
+      } else {
+        showDone();
+      }
+    });
+
+    function showDone() {
+      playEl.style.display = "none";
+      doneEl.style.display = "block";
+      barEl.style.width = "100%";
+      progressEl.textContent = "Finished!";
+      $("learnDoneScore").textContent = score + " / " + questions.length;
+      var msg;
+      if (score === questions.length) msg = "Perfect! You can read a file tree like a map.";
+      else if (score >= questions.length - 2) msg = "Nice work. Look back at the ones you missed. The browser follows the path exactly as you write it.";
+      else msg = "Keep practicing. Remember: start from the page's own folder, go into folders with <code>folder/</code>, go up with <code>../</code>, and match every letter.";
+      $("learnDoneText").innerHTML = msg;
+      $("learnRestart").focus({ preventScroll: true });
+    }
+
+    $("learnRestart").addEventListener("click", function () {
+      current = 0;
+      score = 0;
+      doneEl.style.display = "none";
+      playEl.style.display = "";
+      showQuestion();
+    });
+
+    showQuestion();
+  })();
+</script>
+
+<!-- Footer: fill in your name -->
+<footer>Built by Christina Bays &middot; BMIS 235</footer>
+
+</body>
+</html>
