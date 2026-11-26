@@ -19,20 +19,18 @@
 
 **Why I picked Path 2:**
 
-_____________________________________________________________
-
-_____________________________________________________________
+I wanted to learn how to use AI tools to build and fix a real website, since that's a skill employers want.
 
 ## By hand vs. by AI
 
-**By hand (my first commit, before working with AI):**
+**By hand:**
 - The four pages (Home, Aran Islands, Cliffs of Moher, Guinness Storehouse) and what they say
 - The image menu, including making the menu images
 - `styles.css` with my brand colors and font
 - The author comment, author meta tag and footer on each page
-- The interactive fact box on the Home page: _____________________ (say where it came from)
 
-**By AI (Claude Code), from my instructions:**
+**By AI:**
+- The interactive fact box on the Home page (the bouncing place buttons and fun facts), which I pasted into `index.html`
 - Changed the course label in each page's author comment from HTML-3 to HTML-4
 - Fixed the Home page fact box so its styles apply (wrapped it in `<div class="showcase">`)
 - Built `learn.html`, the learning tool (see below)
@@ -43,9 +41,7 @@ _____________________________________________________________
 
 **How I checked the AI's work:**
 
-_____________________________________________________________
-
-_____________________________________________________________
+I opened the live site after each change, clicked through every page and link, played the Learn Links game including wrong answers, and read Claude's explanations of what it changed before merging.
 
 ## My learning tool: Learn Links (`learn.html`)
 
@@ -64,8 +60,6 @@ There are 8 questions. Some are multiple choice and some I type. Each answer get
 
 **Why this tool fits how I learn:**
 
-_____________________________________________________________
-
-_____________________________________________________________
+I learn best by practicing and getting instant feedback, so a quiz with my own file names helps me remember how links and paths work.
 
 **Classmate tester:** None
